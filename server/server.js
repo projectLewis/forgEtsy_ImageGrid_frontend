@@ -7,7 +7,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname + '/../dist')));
 
-let port = 3001;
+const port = 3000;
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}...`);
