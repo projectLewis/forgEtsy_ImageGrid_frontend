@@ -1,1 +1,1 @@
-# forgEtsy_ImageGrid_proxy
+forgEtsy Image Grid Proxy
