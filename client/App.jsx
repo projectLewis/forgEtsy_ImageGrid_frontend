@@ -1,5 +1,5 @@
 import React from 'React';
-import axios from 'axios';
+// import axios from 'axios';
 
 class App extends React.Component {
   constructor(props){
@@ -12,9 +12,7 @@ class App extends React.Component {
   render(){
     return (
       <div>
-        {/**
-          MODULES GO HERE
-         */}
+        "Hello World"
       </div>
     )
   }
