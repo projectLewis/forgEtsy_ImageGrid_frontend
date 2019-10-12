@@ -1,26 +1,34 @@
 {
-  "name": "my-app",
+  "name": "forgetsy-imagegrid-proxy",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@types/jest": "24.0.18",
-    "@types/node": "12.7.12",
-    "@types/react": "16.9.5",
-    "@types/react-dom": "16.9.1",
+    "axios": "^0.19.0",
     "express": "^4.17.1",
-    "nodemon": "^1.19.3",
+    "lodash.unescape": "^4.0.1",
     "path": "^0.12.7",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0",
+    "react-scripts": "3.2.0"
+  },
+  "devDependencies": {
+    "@types/jest": "24.0.18",
+    "@types/lodash.unescape": "^4.0.6",
+    "@types/node": "12.7.12",
+    "@types/react": "16.9.5",
+    "@types/react-dom": "16.9.1",
+    "nodemon": "^1.19.3",
+    "tslint": "5.20.0",
     "typescript": "3.6.4"
   },
   "scripts": {
     "server": "nodemon server/server.js",
+    "dev": "npm run lint && npm run start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "./node_modules/.bin/tslint 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
     "extends": "react-app"

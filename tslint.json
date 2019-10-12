@@ -1,0 +1,22 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+      "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+      "no-console": false,
+      "no-magic-numbers": true,
+      "no-parameter-reassignment": true,
+      "no-var-keyword": true,
+      "trailing-comma": true,
+      "array-type": [true, "array"],
+      "class-name": true,
+      "indent": [true, "spaces", 2],
+      "eofline": true,
+      "interface-name": [true, "never-prefix"],
+      "max-line-length": false,
+      "object-literal-sort-keys": false
+  },
+  "rulesDirectory": []
+}
