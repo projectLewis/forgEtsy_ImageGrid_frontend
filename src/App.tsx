@@ -1,29 +1,42 @@
 import axios from "axios";
 import unescape from "lodash.unescape";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import style from "./App.module.css";
 import { ApiResults } from "./types/apiResultTypes";
 
+interface State {
+  products: ApiResults[];
+}
+
 const serverDB = "http://ec2-3-14-146-35.us-east-2.compute.amazonaws.com";
-const App: React.FC = () => {
+class App extends React.Component<{}, State> {
+  constructor({}) {
+    super({});
+    this.state = {
+      products: []
+    };
+  }
 
-  const [products, setProducts] = useState<ApiResults[]>([]);
+  public async componentDidMount() {
+    try {
+      const results = await axios.get(`${serverDB}/products`);
+      const products: ApiResults[] = results.data;
+      this.setState({products});
 
-  useEffect(() => {
-    axios.get(`${serverDB}/products`)
-    .then((result) => {
-      const productResults: ApiResults[] = result.data;
-      setProducts(productResults);
-    });
-  }, []);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  return (
-    <div className="App">
-      <header>
-        <h1 className={style.h1Color}>{products[0] ? unescape(products[0].title) : "loading..."}</h1>
-      </header>
-    </div>
-  );
-};
+  public render() {
+    return (
+      <div className="App">
+        <header>
+          <h1 className={style.h1Color}>{this.state.products[0] ? unescape(this.state.products[0].title) : "loading..."}</h1>
+        </header>
+      </div>
+    );
+  }
+}
 
 export default App;
