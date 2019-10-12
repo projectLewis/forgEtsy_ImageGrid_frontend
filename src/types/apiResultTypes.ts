@@ -14,6 +14,7 @@ export interface ShopTypes {
   shop_name: string;
   title: string;
   icon_url_fullxfull: string;
+  custom_shops_state?: number;
 }
 
 export interface ProductOptions {
@@ -32,9 +33,5 @@ export interface ApiResults {
   category_path: [string];
   Images: [ImageTypes];
   Shop: ShopTypes;
-  product_options: {
-    option_1: ProductOptions,
-    option_2: ProductOptions,
-    option_3: ProductOptions,
-  };
+  product_options: [ProductOptions];
 }
