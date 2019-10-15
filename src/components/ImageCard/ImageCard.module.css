@@ -1,0 +1,42 @@
+.imageCard {
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+}
+
+.truncateTitle {
+  width: 194px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.imageCard > p {
+  margin: 2px;
+}
+
+.shopTitle {
+  color: rgb(100, 100, 100);
+}
+
+.imageCard > h3 {
+  margin: 2px;
+}
+
+.productImage {
+  width: 206px;
+  height: 164px;
+  border-radius: 2px;
+}
+
+.productImage:hover {
+  box-shadow: dimgray 1px 1px 5px 1px;
+}
+
+.freeShipping {
+  display: inline-block;
+  background-color: rgba(124, 204, 177, 0.412);
+  padding: 1px 5px;
+  border-radius: 15px;
+  font-size: 12px;
+}

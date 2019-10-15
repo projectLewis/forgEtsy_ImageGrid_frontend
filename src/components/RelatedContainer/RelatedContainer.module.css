@@ -1,0 +1,19 @@
+.relatedHeader {
+  text-align: center;
+}
+
+.similarItemsBtnContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.similarItemsBtn {
+  border: 1px solid black;
+  height: 35px;
+  font-weight: 700;
+  border-radius: 3px;
+  font-size: 13px;
+  background: black;
+  color: white;
+}

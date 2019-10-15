@@ -1,3 +1,8 @@
 .h1Color {
   color: red;
 }
+
+.horizontalRule {
+  border-bottom: 1px solid rgb(190, 190, 190);
+  margin: 20px 0 60px 0;
+}
