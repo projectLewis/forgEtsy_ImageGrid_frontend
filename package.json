@@ -27,7 +27,7 @@
   },
   "scripts": {
     "server": "nodemon server/server.js",
-    "dev": "npm run lint && npm run start",
+    "start:dev": "npm run lint && npm run start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

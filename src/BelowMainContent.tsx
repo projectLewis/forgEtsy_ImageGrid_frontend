@@ -1,13 +1,14 @@
+import axios from "axios";
 import React from "react";
 import { match } from "react-router-dom";
 import style from "./App.module.css";
 import RelatedContainer from "./components/RelatedContainer/RelatedContainer";
 import ShopContainer from "./components/ShopContainer/ShopContainer";
+import { APIENDPOINT } from "./Const";
 import { ApiResults } from "./interfaces/apiResultTypes";
 
 interface PropTypes {
   match: match<{ productId: string }>;
-  products: ApiResults[];
 }
 
 interface State {
@@ -17,6 +18,9 @@ interface State {
 }
 
 class BelowMainContent extends React.Component<PropTypes, State> {
+  private CancelToken = axios.CancelToken;
+  private source = this.CancelToken.source();
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -27,47 +31,18 @@ class BelowMainContent extends React.Component<PropTypes, State> {
   }
 
   public componentDidMount() {
-    const selectedProduct = this.findProduct();
-    let relatedCount = 0;
-    const relatedCap = 5;
-    const relatedProducts: ApiResults[] = [];
-    const addlShopProducts = this.findRandomShopProducts();
-    this.props.products.forEach((product) => {
-      if (relatedCount === relatedCap) {
-        return;
-      }
-      if (product.category_path.includes(selectedProduct.category_path[0])) {
-        relatedCount += 1;
-        relatedProducts.push(product);
-      }
-    });
-    this.setState({ selectedProduct, relatedProducts, addlShopProducts });
+    this.getProducts();
+  }
+
+  public componentWillUnmount() {
+    this.source.cancel("cancelled on unmount");
   }
 
   public componentDidUpdate(prevProps: PropTypes) {
     if (
       prevProps.match.params.productId !== this.props.match.params.productId
     ) {
-      const selectedProduct = this.findProduct();
-      let relatedCount = 0;
-      const relatedCap = 5;
-      const relatedProducts: ApiResults[] = [];
-      const addlShopProducts = this.findRandomShopProducts();
-      (async () => {
-        await this.props.products.reverse().forEach(async (product, idx) => {
-          if (relatedCount === relatedCap) {
-            return;
-          }
-          if (
-            product.category_path.includes(selectedProduct.category_path[0])
-          ) {
-            relatedCount += 1;
-            await relatedProducts.push(product);
-          }
-        });
-        this.setState({ relatedProducts });
-      })();
-      this.setState({ selectedProduct, addlShopProducts });
+      this.getProducts();
     }
   }
 
@@ -95,43 +70,29 @@ class BelowMainContent extends React.Component<PropTypes, State> {
     );
   }
 
-  private findProduct(): ApiResults {
-    const productId: ApiResults["listing_id"] = Number(
-      this.props.match.params.productId
-    );
-    const productToReturn = this.props.products.filter((product) => {
-      if (product.listing_id === productId) {
-        return product;
+  private async getProducts() {
+    const productId = this.props.match.params.productId;
+    try {
+      const results = await axios.get(`${APIENDPOINT}/product/${productId}`, {
+        cancelToken: this.source.token
+      });
+
+      const selectedProductsIndex = 0;
+      const relatedProductsIndex = 1;
+      const shopProductsIndex = 2;
+
+      const selectedProduct: ApiResults = results.data[selectedProductsIndex];
+      const relatedProducts: ApiResults[] = results.data[relatedProductsIndex];
+      const addlShopProducts: ApiResults[] = results.data[shopProductsIndex];
+      this.setState({ selectedProduct, relatedProducts, addlShopProducts });
+    } catch (error) {
+      if (axios.isCancel(error)) {
+        console.error("Request canceled", error.message);
+        throw new Error("Cancelled");
+      } else {
+        console.error(error);
       }
-      return undefined;
-    });
-    return productToReturn[0];
-  }
-
-  private findRandomShopProducts(): ApiResults[] {
-    const randomIndexes: number[] = [];
-    let count = 0;
-    const maxCount = 5;
-
-    while (count < maxCount) {
-      const randomNumber = this.getRandomNumber(randomIndexes, maxCount);
-      randomIndexes.push(randomNumber);
-      count += 1;
     }
-
-    const randomShopProducts: ApiResults[] = [];
-    randomIndexes.forEach((randomIndex) => {
-      randomShopProducts.push(this.props.products[randomIndex]);
-    });
-    return randomShopProducts;
-  }
-
-  private getRandomNumber = (array: number[], max: number): number => {
-    let randomNumber = Math.floor(Math.random() * (max * max));
-    while (array.includes(randomNumber)) {
-      randomNumber = Math.floor(Math.random() * (max + max));
-    }
-    return randomNumber;
   }
 }
 
