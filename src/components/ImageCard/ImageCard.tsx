@@ -1,5 +1,7 @@
 import React from "react";
-import { backupImage } from "../../Const";
+import { Link } from "react-router-dom";
+import { ApiResults } from "../../interfaces/apiResultTypes";
+import { backupImage } from "../../utils";
 import style from "./ImageCard.module.css";
 
 interface PropTypes {
@@ -7,6 +9,7 @@ interface PropTypes {
   title: string;
   price: number;
   shop?: string;
+  listingId: ApiResults["listing_id"];
 }
 
 const ImageCard: React.FC<PropTypes> = (props: PropTypes) => {
@@ -15,12 +18,14 @@ const ImageCard: React.FC<PropTypes> = (props: PropTypes) => {
     : `${props.price}`;
   return (
     <div className={style.imageCard}>
-      <img
-        className={style.productImage}
-        src={props.imgUrl}
-        alt={props.title}
-        onError={(e) => backupImage(e)}
-      />
+      <Link to={`/${props.listingId}`}>
+        <img
+          className={style.productImage}
+          src={props.imgUrl}
+          alt={props.title}
+          onError={(e) => backupImage(e)}
+        />
+      </Link>
       <p className={style.truncateTitle}>{props.title}</p>
       {props.shop ? <p className={style.shopTitle}>{props.shop}</p> : null}
       <h3>

@@ -1,7 +1,7 @@
 import faker from "faker";
 import React from "react";
-import { backupImage } from "../../Const";
 import { ApiResults, ShopTypes } from "../../interfaces/apiResultTypes";
+import { backupImage } from "../../utils";
 import ShopGrid from "../ImageGrid/ShopGrid/ShopGrid";
 import style from "./ShopContainer.module.css";
 import ShopDetails from "./ShopDetails";

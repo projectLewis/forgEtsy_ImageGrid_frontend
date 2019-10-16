@@ -24,6 +24,7 @@ const ImageGrid: React.FC<PropTypes> = ({
         return (
           <ImageCard
             key={product.listing_id}
+            listingId={product.listing_id}
             shop={includeShop ? product.Shop.shop_name : undefined}
             price={product.price}
             title={title}
