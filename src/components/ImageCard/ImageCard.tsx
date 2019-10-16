@@ -10,6 +10,9 @@ interface PropTypes {
 }
 
 const ImageCard: React.FC<PropTypes> = (props: PropTypes) => {
+  const priceAsFloat = Number.isInteger(props.price)
+    ? `${props.price}.00`
+    : `${props.price}`;
   return (
     <div className={style.imageCard}>
       <img
@@ -21,7 +24,7 @@ const ImageCard: React.FC<PropTypes> = (props: PropTypes) => {
       <p className={style.truncateTitle}>{props.title}</p>
       {props.shop ? <p className={style.shopTitle}>{props.shop}</p> : null}
       <h3>
-        ${props.price}.00{" "}
+        ${priceAsFloat}{" "}
         <span className={style.freeShipping}>FREE Shipping</span>
       </h3>
     </div>
