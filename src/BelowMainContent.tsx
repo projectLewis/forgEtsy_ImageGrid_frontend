@@ -1,3 +1,17 @@
+/* 
+I chose this component because it shows familiarity with Typescript, react, lifecycle methods, and react-router, CSS modules,
+ async/await, accessing an API, and using the results of the API to build out other components. 
+
+This particular file shows the culmination of a bunch of different skills and technologies that are being used elsewhere 
+throughout the project. Because react tends to be so modular, below this component, 
+there was less to highlight besides project architecture decisions & using "map" to fill out a CSS grid.
+
+While not specifically in this file, one of the things I was proud of was setting up the ApiResults interface to have 
+all of the results typings available to me in this file, and down the line in other files. 
+I had to figure out how to nest interfaces for nested objects of the main results. The first layer returned product info, 
+"Shop" returned additional products from the same shop.
+*/
+
 import axios from "axios";
 import React from "react";
 import { match } from "react-router-dom";
